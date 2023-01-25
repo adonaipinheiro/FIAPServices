@@ -6,7 +6,7 @@ const duration = function (req, res, next) {
   res.on('finish', function () {
     console.timeEnd(
       `\n\"${req.method} ${req.hostname}${req.baseUrl}${req.path}\"
-      \nResponse time`,
+    \nResponse time`,
     );
   });
   next();
