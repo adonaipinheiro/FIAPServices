@@ -1,0 +1,83 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "FIAP Services",
+    "description": "API description in Markdown.",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Everything about your Pets"
+    },
+    {
+      "name": "Products",
+      "description": "Access to Petstore orders"
+    }
+  ],
+  "paths": {
+    "/signin": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Returns a list of users.",
+        "description": "Optional extended description in Markdown.",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Returns a list of users.",
+        "description": "Optional extended description in Markdown.",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Products"],
+        "summary": "Returns a list of users.",
+        "description": "Optional extended description in Markdown.",
+        "produces": ["application/json"],
+        "consumes": ["multipart/form-data"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "description": "Parameter description in Markdown."
+          },
+          {
+            "in": "formData",
+            "name": "name",
+            "type": "string",
+            "description": "A person's name."
+          },
+          {
+            "in": "formData",
+            "name": "fav_number",
+            "type": "number",
+            "description": "A person's favorite number."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
