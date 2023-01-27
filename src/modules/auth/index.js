@@ -8,10 +8,26 @@ const database = require('../../database');
 // Middleware
 const authenticateToken = require('../../middlewares/authenticateTokenMiddleware');
 
-router.get('/signIn', function (req, res) {
+router.post('/signIn', function (req, res) {
+  // #swagger.tags = ['Auth']
+  // #swagger.summary = 'LogIn do usuário'
+  // #swagger.description = 'EndPoint para autenticar o usuário na aplicação e devolver um token válido'
+  // #swagger.consumes = ['application/json']
+  // #swagger.produces = ['application/json']
+
+  /*	#swagger.requestBody = {
+    required: true,
+    schema: { $ref: "#/definitions/signInScheme" }
+  } */
+
   const user = database.findUser(req.body.email);
 
   if (!req.body.email || !req.body.pass)
+    /* #swagger.responses[403] = {
+      schema: {
+        message: 'Formato inválido'
+      }
+    } */
     return res.status(403).json({
       message: 'Formato inválido',
     });
@@ -22,6 +38,11 @@ router.get('/signIn', function (req, res) {
     .digest('hex');
 
   if (!user || user.pass !== bodyPass) {
+    /* #swagger.responses[404] = {
+      schema: {
+        message: 'Usuário ou senha não encontrados'
+      }
+    } */
     return res.status(404).json({
       message: 'Usuário ou senha não encontrados',
     });
@@ -31,12 +52,28 @@ router.get('/signIn', function (req, res) {
     expiresIn: '1d',
   });
 
+  /* #swagger.responses[200] = {
+    schema: {
+      token: 'Token JWT'
+    }
+  } */
   return res.json({
     token,
   });
 });
 
 router.put('/signUp', function (req, res) {
+  // #swagger.tags = ['Auth']
+  // #swagger.summary = 'Cadastro do usuário'
+  // #swagger.description = 'EndPoint para cadastrar o usuário na aplicação e devolver um token válido'
+  // #swagger.consumes = ['application/json']
+  // #swagger.produces = ['application/json']
+
+  /*	#swagger.requestBody = {
+    required: true,
+    schema: { $ref: "#/definitions/signUpScheme" }
+  } */
+
   if (
     !req.body.name ||
     !req.body.email ||
@@ -45,14 +82,24 @@ router.put('/signUp', function (req, res) {
     !req.body.email === '' ||
     !req.body.pass === ''
   )
+    /* #swagger.responses[403] = {
+      schema: {
+        message: 'Formato inválido'
+      }
+    } */
     return res.status(403).json({
       message: 'Formato inválido',
     });
 
   const user = database.findUser(req.body.email);
 
+  /* #swagger.responses[409] = {
+      schema: {
+        message: 'Usuário ou senha não encontrados'
+      }
+    } */
   if (user) {
-    return res.status(403).json({
+    return res.status(409).json({
       message: 'Usuário já cadastrado',
     });
   }
@@ -68,20 +115,46 @@ router.put('/signUp', function (req, res) {
     expiresIn: '1d',
   });
 
+  /* #swagger.responses[200] = {
+    schema: {
+      token: 'Token JWT'
+    }
+  } */
   return res.json({
     token,
   });
 });
 
 router.get('/getAllUsers', function (_, res) {
+  // #swagger.tags = ['Auth']
+  // #swagger.summary = 'Ler todos os usuários cadastrados'
+  // #swagger.description = 'EndPoint para ler todos os usuários cadastrados na aplicação'
+  // #swagger.produces = ['application/json']
+
+  /* #swagger.responses[200] = {
+    schema: { $ref: "#/definitions/allUsersScheme" }
+  } */
   return res.status(200).json(database.getUsers());
 });
 
 router.get('/getAllUsers/withPass', function (_, res) {
+  // #swagger.tags = ['Auth']
+  // #swagger.summary = 'Ler todos os usuários cadastrados com suas senhas'
+  // #swagger.description = 'EndPoint para ler todos os usuários cadastrados na aplicação'
+  // #swagger.produces = ['application/json']
+
+  /* #swagger.responses[200] = {
+    schema: { $ref: "#/definitions/allUsersWithPassScheme" }
+  } */
   return res.status(200).json(database.getUsersWithPass());
 });
 
-router.get('/validateToken', authenticateToken, function (req, res) {
+router.get('/validateToken', authenticateToken, function (_, res) {
+  // #swagger.tags = ['Auth']
+  // #swagger.summary = 'Verificar se um token é válido'
+  // #swagger.description = 'EndPoint para verificar se um token é válido'
+
+  /* #swagger.responses[204] = {} */
   return res.status(204).send();
 });
 
