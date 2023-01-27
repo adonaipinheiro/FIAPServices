@@ -109,7 +109,7 @@ router.put('/signUp', function (req, res) {
     .update(req.body.pass)
     .digest('hex');
 
-  database.addUser(req.body.name, req.body.email, bodyPass);
+  database.addUser(req.body.name, req.body.email, req.body.pass);
 
   const token = jwt.sign({email: req.body.email}, bodyPass, {
     expiresIn: '1d',

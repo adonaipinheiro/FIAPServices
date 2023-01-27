@@ -13,15 +13,7 @@ const timeoutMiddleware = require('./middlewares/timeoutMiddleware');
 
 app.use(timeoutMiddleware);
 
-const options = {
-  customCss: '.swagger-ui .topbar { display: none }',
-};
-
-app.use(
-  '/docs',
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerDocument, options),
-);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(express.json());
 app.use(cors());

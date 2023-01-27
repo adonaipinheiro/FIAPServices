@@ -25,12 +25,15 @@ function authenticateToken(req, res, next) {
   } */
   if (!userPass) return res.sendStatus(403);
 
+  console.log(userPass);
+
   jwt.verify(token, userPass, (err, user) => {
     /* #swagger.responses[403] = {
       schema: {
         message: 'Token inválido'
       }
   } */
+    console.log(err);
     if (err) return res.sendStatus(403);
 
     req.user = user;
