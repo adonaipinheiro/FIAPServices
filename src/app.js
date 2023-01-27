@@ -8,6 +8,11 @@ const swaggerDocument = require('./swagger.json');
 const products = require('./modules/products');
 const auth = require('./modules/auth');
 
+// Middlewares
+const timeoutMiddleware = require('./middlewares/timeoutMiddleware');
+
+app.use(timeoutMiddleware);
+
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(express.json());

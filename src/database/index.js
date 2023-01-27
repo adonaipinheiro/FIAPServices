@@ -40,10 +40,24 @@ class Database {
 
   constructor() {
     this.#users = this.#createUsers();
+    this.addUser('admin', 'admin@admin.com', '123456');
   }
 
   getUsers() {
-    return this.#users;
+    return this.#users.map(user => ({
+      name: user.name,
+      email: user.email,
+      products: user.products,
+    }));
+  }
+
+  getUsersWithPass() {
+    return this.#users.map(user => ({
+      name: user.name,
+      email: user.email,
+      pass: user.pass,
+      products: user.products,
+    }));
   }
 
   findUser(email) {
@@ -74,7 +88,7 @@ class Database {
     this.#users.push({
       name,
       email,
-      pass,
+      pass: crypto.createHash('sha256').update(pass).digest('hex'),
       products: [],
     });
   }
