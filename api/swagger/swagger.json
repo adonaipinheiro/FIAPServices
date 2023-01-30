@@ -263,6 +263,133 @@
         }
       }
     },
+    "/auth/getUser": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Ler os dados do usuário logado",
+        "description": "EndPoint para ler os dados do usuário logado na aplicação",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Teste"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "teste@teste.com.br"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Teste"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "teste@teste.com.br"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Token inválido"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Token inválido"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuário não encontrado"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuário não encontrado"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/auth/getAllUsers": {
       "get": {
         "tags": [
@@ -816,6 +943,22 @@
   },
   "components": {
     "schemas": {
+      "usersScheme": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Vin"
+          },
+          "email": {
+            "type": "string",
+            "example": "vin.maurise@outlook.com"
+          }
+        },
+        "xml": {
+          "name": "usersScheme"
+        }
+      },
       "allUsersScheme": {
         "type": "array",
         "items": {

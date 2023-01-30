@@ -125,6 +125,45 @@ router.put('/signUp', function (req, res) {
   });
 });
 
+router.get('/getUser', function (req, res) {
+  // #swagger.tags = ['Auth']
+  // #swagger.summary = 'Ler os dados do usuário logado'
+  // #swagger.description = 'EndPoint para ler os dados do usuário logado na aplicação'
+  // #swagger.produces = ['application/json']
+
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  const userTokenDecoded = jwt.decode(token);
+
+  /* #swagger.responses[401] = {
+      schema: {
+        message: 'Token inválido'
+      }
+  } */
+  if (!userTokenDecoded) return res.sendStatus(401);
+
+  const user = database.findUser(userTokenDecoded.email);
+
+  /* #swagger.responses[403] = {
+      schema: {
+        message: 'Usuário não encontrado'
+      }
+  } */
+  if (!user) return res.sendStatus(403);
+
+  /* #swagger.responses[200] = {
+    schema: {
+      name: "Teste",
+      email: "teste@teste.com.br"
+    }
+  } */
+  return res.status(200).json({
+    name: user.name,
+    email: user.email,
+  });
+});
+
 router.get('/getAllUsers', function (_, res) {
   // #swagger.tags = ['Auth']
   // #swagger.summary = 'Ler todos os usuários cadastrados'

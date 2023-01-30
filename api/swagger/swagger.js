@@ -8,6 +8,10 @@ const doc = {
   host: 'localhost:3000',
   schemes: ['http'],
   definitions: {
+    usersScheme: {
+      name: 'Vin',
+      email: 'vin.maurise@outlook.com',
+    },
     allUsersScheme: [
       {
         name: 'Vin',
